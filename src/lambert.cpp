@@ -9,12 +9,14 @@ Lambert::Lambert(fColour colour):
 
 fColour Lambert::shade(const LightSource& light, const Hit& hit) const
 {
-    Vec3f lightDir = light.getDir(hit.pos);
+    Vec3f lightDir = (light.getDir(hit.pos)).getNormalized();
 
     //Calculate shades
 
+    //Normalize vector (just in case)
+    Vec3f normalizedNormal = hit.n.getNormalized();
     //Calculate cos of the angle between the light vector and the normal
-    float cosA = hit.n.dot(lightDir);
+    float cosA = normalizedNormal.dot(lightDir);
     if (cosA < 0.)
         cosA = 0.;
 
